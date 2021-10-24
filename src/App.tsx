@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { Link } from 'react-router-dom';
 
 function App() {
   return (
@@ -10,14 +11,13 @@ function App() {
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
-        <a
+        <Link
+          to="./weekly-timetable"
           className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
-        </a>
+          Weekly Timetable
+        </Link>
       </header>
     </div>
   );

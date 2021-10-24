@@ -3,10 +3,19 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {BrowserRouter, Route} from 'react-router-dom';
+import WeeklyTimeTable from './components/WeeklyTimeTable';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Route path="/weekly-timetable">
+        <WeeklyTimeTable></WeeklyTimeTable>
+      </Route>
+      <Route exact path="/">
+        <App />
+      </Route>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
