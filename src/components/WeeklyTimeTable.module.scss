@@ -1,0 +1,30 @@
+.timetable {
+    font-size: 1.2em;
+    width: 100%;
+    table-layout: fixed;
+    box-shadow: 5px 10px 8px #888888;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: 1px solid rgba(100, 100, 100, 0.25);
+
+    th {
+        padding: 0.4em;
+        text-align: left;
+    }
+
+    td  {
+        border: 1px solid rgba(100, 100, 100, 0.25);
+        padding: 0.3em;
+        overflow-wrap: break-word;
+    }
+
+    td:first-child {
+        white-space: nowrap;
+    }
+
+    &.green {
+        background-color: #d8ead2;
+        thead { background-color: #01ff01; }
+        tbody tr:nth-last-child(-n+2) { background-color: #b8d7ab; }
+    }
+}
