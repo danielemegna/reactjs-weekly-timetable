@@ -27,4 +27,34 @@
         thead { background-color: #01ff01; }
         tbody tr:nth-last-child(-n+2) { background-color: #b8d7ab; }
     }
+    &.blue {
+        background-color: #a4c3c8;
+        thead { background-color: #01ffff; }
+        tbody tr:nth-last-child(-n+2) { background-color: #75a3b0; }
+    }
+    &.orange {
+        background-color: #f9ca9c;
+        thead { background-color: #fe9900; }
+        tbody tr:nth-last-child(-n+2) { background-color: #f7b16b; }
+    }
+    &.pink {
+        background-color: #d7a5c0;
+        thead { background-color: #d800d7; }
+        tbody tr:nth-last-child(-n+2) { background-color: #c27ba3; }
+    }
+    &.purple {
+        background-color: #dad2ea;
+        thead { background-color: #b2a5d3; }
+        tbody tr:nth-last-child(-n+2) { background-color: #8e7dc3; }
+    }
+    &.yellow {
+        background-color: #ffe59a;
+        thead { background-color: #ffff01; }
+        tbody tr:nth-last-child(-n+2) { background-color: #fed966; }
+    }
+    &.red {
+        background-color: #eb999b;
+        thead { background-color: #fe0000; }
+        tbody tr:nth-last-child(-n+2) { background-color: #e06665; }
+    }
 }

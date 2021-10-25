@@ -1,51 +1,56 @@
+import moment from "moment";
+import 'moment/locale/it'
 import { Link } from "react-router-dom";
 import style from './WeeklyTimeTable.module.scss'
 
+function shiftsFromDate(date: moment.Moment): string[][] {
+  return [
+    ["Cristina","Anna"],
+    ["Anna","Cristina & girls"],
+    ["Eleonora, Cristina","Anna"],
+    ["Anna","Sonia"],
+    ["Eleonora","Cristina & girls"],
+    ["Anna, Monica, Erika, Elisa","Daniele, Stefania, Giona"],
+    ["Barbara, Laura, Elena, Cinzia","Anna, Rossana"],
+  ].sort( () => .5 - Math.random() );
+}
+
+function colorFromWeekNumber(n: number): string {
+  const CLASSES = [
+    style.blue, style.green, style.purple,
+    style.orange, style.yellow, style.pink, style.red
+  ]
+  return CLASSES[n % CLASSES.length]
+}
+
 export default function WeeklyTimeTable() {
+  const weekDay = moment()
+  const startOfWeek = weekDay.clone().startOf('week')
+  const shifts = shiftsFromDate(weekDay)
+  const weekColor = colorFromWeekNumber(weekDay.week())
+
   return (
     <>
-      <table className={style.timetable + " " + style.green}>
-        <thead><tr>
-          <th>OTTOBRE</th>
-          <th>Mattino</th>
-          <th>Sera</th>
-        </tr></thead>
+      <table className={style.timetable + " " + weekColor}>
+        <thead>
+          <tr>
+            <th>{startOfWeek.format("MMMM").toUpperCase()}</th>
+            <th>Mattino</th>
+            <th>Sera</th>
+          </tr>
+        </thead>
         <tbody>
-          <tr>
-            <td>lun 25</td>
-            <td>Eleonora</td>
-            <td>Cristina &amp; girls</td>
-          </tr>
-          <tr>
-            <td>mar 26</td>
-            <td>Cristina</td>
-            <td>Anna</td>
-          </tr>
-          <tr>
-            <td>mer 27</td>
-            <td>Anna</td>
-            <td>Cristina &amp; girls</td>
-          </tr>
-          <tr>
-            <td>gio 28</td>
-            <td>Barbara, Laura, Elena, Cinzia</td>
-            <td>Anna, Rossana</td>
-          </tr>
-          <tr>
-            <td>ven 29</td>
-            <td>Anna</td>
-            <td>Sonia</td>
-          </tr>
-          <tr>
-            <td>sab 30</td>
-            <td>Eleonora, Cristina</td>
-            <td>Anna</td>
-          </tr>
-          <tr>
-            <td>dom 31</td>
-            <td>Anna, Monica, Erika, Elisa</td>
-            <td>Daniele, Stefania, Giona</td>
-          </tr>
+          {
+            shifts.map((shift => {
+              const row = <tr key={startOfWeek.format()}>
+                <td>{startOfWeek.format("ddd D")}</td>
+                <td>{shift[0]}</td>
+                <td>{shift[1]}</td>
+              </tr>
+              startOfWeek.add(1, 'days')
+              return row
+            }))
+          }
         </tbody>
       </table>
 
