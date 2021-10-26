@@ -30,7 +30,7 @@ export default function WeeklyTimeTable() {
   const weekColor = colorFromWeekNumber(weekDay.week())
 
   return (
-    <>
+    <div className={style.tablewrapper}>
       <table className={style.timetable + " " + weekColor}>
         <thead>
           <tr>
@@ -56,6 +56,6 @@ export default function WeeklyTimeTable() {
 
       <br />
       <Link to="/">Indietro</Link>
-    </>
+    </div>
   )
 }
