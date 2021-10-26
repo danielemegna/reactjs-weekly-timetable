@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import Home from './pages/Home';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
 import WeeklyTimeTable from './components/WeeklyTimeTable';
@@ -11,7 +11,7 @@ ReactDOM.render(
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <App />
+          <Home />
         </Route>
         <Route exact path="/weekly-timetable">
           <WeeklyTimeTable></WeeklyTimeTable>
