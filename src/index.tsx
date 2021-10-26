@@ -3,18 +3,21 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
 import WeeklyTimeTable from './components/WeeklyTimeTable';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Route path="/weekly-timetable">
-        <WeeklyTimeTable></WeeklyTimeTable>
-      </Route>
-      <Route exact path="/">
-        <App />
-      </Route>
+      <Switch>
+        <Route exact path="/">
+          <App />
+        </Route>
+        <Route exact path="/weekly-timetable">
+          <WeeklyTimeTable></WeeklyTimeTable>
+        </Route>
+        <Redirect to="/weekly-timetable"/>
+      </Switch>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
