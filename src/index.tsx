@@ -4,7 +4,7 @@ import './index.css';
 import Home from './pages/Home';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
-import WeeklyTimeTable from './components/WeeklyTimeTable';
+import WeeklyTimeTable from './pages/WeeklyTimeTable';
 
 ReactDOM.render(
   <React.StrictMode>
