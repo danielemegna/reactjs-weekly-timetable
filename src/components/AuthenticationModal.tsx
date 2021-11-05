@@ -1,4 +1,3 @@
-import { error } from 'console'
 import { useState } from 'react'
 import style from './AuthenticationModal.module.scss'
 
