@@ -12,8 +12,11 @@
     border: 1px solid rgba(100, 100, 100, 0.25);
 
     th {
+        font-size: 0.9em;
         padding: 0.4em;
         text-align: left;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     td  {
