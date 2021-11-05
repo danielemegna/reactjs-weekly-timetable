@@ -1,15 +1,11 @@
-.tablewrapper {
-    padding: 0.5em;
-}
-
 .timetable {
     font-size: 1.2em;
     width: 100%;
     table-layout: fixed;
-    box-shadow: 5px 10px 8px #888888;
+    box-shadow: 3px 3px 8px #888888;
     border-collapse: collapse;
     border-spacing: 0;
-    border: 1px solid rgba(100, 100, 100, 0.25);
+    $borders: 1px solid rgb(100, 100, 100, 0.25);
 
     th {
         font-size: 0.9em;
@@ -17,12 +13,13 @@
         text-align: left;
         overflow: hidden;
         text-overflow: ellipsis;
+        border: $borders;
     }
 
     td  {
-        border: 1px solid rgba(100, 100, 100, 0.25);
         padding: 0.3em;
         overflow-wrap: break-word;
+        border: $borders;
     }
 
     td:first-child {

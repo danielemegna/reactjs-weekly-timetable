@@ -29,29 +29,27 @@ export default function WeeklyTimeTable() {
   const weekColor = colorFromWeekNumber(weekDay.week())
 
   return (
-    <div className={style.tablewrapper}>
-      <table className={style.timetable + " " + weekColor}>
-        <thead>
-          <tr>
-            <th>{startOfWeek.format("MMMM").toUpperCase()}</th>
-            <th>Mattino</th>
-            <th>Sera</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            shifts.map((shift => {
-              const row = <tr key={startOfWeek.format()}>
-                <td>{startOfWeek.format("ddd D")}</td>
-                <td>{shift[0]}</td>
-                <td>{shift[1]}</td>
-              </tr>
-              startOfWeek.add(1, 'days')
-              return row
-            }))
-          }
-        </tbody>
-      </table>
-    </div>
+    <table className={style.timetable + " " + weekColor}>
+      <thead>
+        <tr>
+          <th>{startOfWeek.format("MMMM").toUpperCase()}</th>
+          <th>Mattino</th>
+          <th>Sera</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          shifts.map((shift => {
+            const row = <tr key={startOfWeek.format()}>
+              <td>{startOfWeek.format("ddd D")}</td>
+              <td>{shift[0]}</td>
+              <td>{shift[1]}</td>
+            </tr>
+            startOfWeek.add(1, 'days')
+            return row
+          }))
+        }
+      </tbody>
+    </table>
   )
 }
