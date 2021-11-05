@@ -1,6 +1,5 @@
 import moment from "moment";
 import 'moment/locale/it'
-import { Link } from "react-router-dom";
 import style from './WeeklyTimeTable.module.scss'
 
 function shiftsFromDate(date: moment.Moment): string[][] {
@@ -53,9 +52,6 @@ export default function WeeklyTimeTable() {
           }
         </tbody>
       </table>
-
-      <br />
-      <Link to="/">Indietro</Link>
     </div>
   )
 }
