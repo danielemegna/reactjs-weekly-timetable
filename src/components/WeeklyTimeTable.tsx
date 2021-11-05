@@ -1,6 +1,9 @@
-import moment from "moment";
-import 'moment/locale/it'
+import moment from 'moment'
 import style from './WeeklyTimeTable.module.scss'
+
+interface Props {
+  startOfWeek: moment.Moment
+}
 
 function shiftsFromDate(date: moment.Moment): string[][] {
   return [
@@ -22,11 +25,9 @@ function colorFromWeekNumber(n: number): string {
   return CLASSES[n % CLASSES.length]
 }
 
-export default function WeeklyTimeTable() {
-  const weekDay = moment()
-  const startOfWeek = weekDay.clone().startOf('week')
-  const shifts = shiftsFromDate(weekDay)
-  const weekColor = colorFromWeekNumber(weekDay.week())
+export default function WeeklyTimeTable({startOfWeek}: Props) {
+  const shifts = shiftsFromDate(startOfWeek)
+  const weekColor = colorFromWeekNumber(startOfWeek.week())
 
   return (
     <table className={style.timetable + " " + weekColor}>
@@ -39,15 +40,13 @@ export default function WeeklyTimeTable() {
       </thead>
       <tbody>
         {
-          shifts.map((shift => {
-            const row = <tr key={startOfWeek.format()}>
-              <td>{startOfWeek.format("ddd D")}</td>
+          shifts.map((shift, index) => {
+            return <tr key={index}>
+              <td>{startOfWeek.clone().add(index, 'days').format("ddd D")}</td>
               <td>{shift[0]}</td>
               <td>{shift[1]}</td>
             </tr>
-            startOfWeek.add(1, 'days')
-            return row
-          }))
+          })
         }
       </tbody>
     </table>
