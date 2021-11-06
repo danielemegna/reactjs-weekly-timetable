@@ -15,7 +15,7 @@ export default function WeeklyTimeTable() {
       <WeeklyTimeTableComponent startOfWeek={startOfWeek} />
       <ChangeWeekButton
         direction={Direction.PREVIOUS}
-        onClick={() => setStartOfWeek(startOfWeek.clone().subtract(2, 'week'))} />
+        onClick={() => setStartOfWeek(startOfWeek.clone().subtract(1, 'week'))} />
       <ChangeWeekButton
         direction={Direction.NEXT}
         onClick={() => setStartOfWeek(startOfWeek.clone().add(1, 'week'))}
