@@ -51,6 +51,13 @@ Temporary dev node docker env:
 $ docker run --rm -it -p 3000:3000 -v $PWD:/app -w /app node:lts bash
 ```
 
+Production ready start with Dockerfile:
+
+```
+$ docker build -t rwtimetable .
+$ docker run --rm -dp 3000:80 --name rwtimetable rwtimetable
+```
+
 After install notes
 
 ```
