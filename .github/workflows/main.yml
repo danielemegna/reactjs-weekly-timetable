@@ -1,0 +1,25 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: deploy via ssh commands
+        uses: fifsky/ssh-action@master
+        with:
+          command: |
+            cd reactjs-weekly-timetable
+            git pull
+            docker stop rwtimetable || true
+            docker run --rm --name rwtimetable -d -p 3000:3000 -v $PWD:/app -w /app node:lts /bin/bash -c "yarn install && yarn start"
+          host: md.tru.io
+          user: root
+          key: ${{ secrets.PRIVATE_KEY}}
+          
