@@ -1,9 +1,9 @@
 import moment from "moment";
 import 'moment/locale/it'
 import { useState } from 'react';
-import AuthenticationModal from '../components/AuthenticationModal';
-import { ChangeWeekButton, Direction } from '../components/ChangeWeekButton';
-import {default as WeeklyTimeTableComponent} from '../components/WeeklyTimeTable';
+import AuthenticationModal from "../../components/authentication-modal/AuthenticationModal";
+import { ChangeWeekButton, Direction as ChangeWeekButtonDirection } from "../../components/change-week-button/ChangeWeekButton";
+import { default as WeeklyTimeTableComponent } from '../../components/weekly-timetable/WeeklyTimeTable';
 
 export default function WeeklyTimeTable() {
   const now = moment().clone().startOf('week')
@@ -14,12 +14,12 @@ export default function WeeklyTimeTable() {
       <AuthenticationModal />
       <WeeklyTimeTableComponent startOfWeek={startOfWeek} />
       <ChangeWeekButton
-        direction={Direction.PREVIOUS}
+        direction={ChangeWeekButtonDirection.PREVIOUS}
         onClick={() => setStartOfWeek(startOfWeek.clone().subtract(1, 'week'))} />
       <ChangeWeekButton
-        direction={Direction.NEXT}
+        direction={ChangeWeekButtonDirection.NEXT}
         onClick={() => setStartOfWeek(startOfWeek.clone().add(1, 'week'))}
-        />
+      />
     </div>
   )
 }

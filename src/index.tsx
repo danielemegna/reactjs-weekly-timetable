@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Home from './pages/Home';
+import Home from './pages/home/Home';
 import reportWebVitals from './reportWebVitals';
-import {HashRouter, Redirect, Route, Switch} from 'react-router-dom';
-import WeeklyTimeTable from './pages/WeeklyTimeTable';
+import { HashRouter, Redirect, Route, Switch } from 'react-router-dom';
+import WeeklyTimeTable from './pages/weekly-timetable/WeeklyTimeTable';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,7 +16,7 @@ ReactDOM.render(
         <Route exact path="/weekly-timetable">
           <WeeklyTimeTable></WeeklyTimeTable>
         </Route>
-        <Redirect to="/weekly-timetable"/>
+        <Redirect to="/weekly-timetable" />
       </Switch>
     </HashRouter>
   </React.StrictMode>,
