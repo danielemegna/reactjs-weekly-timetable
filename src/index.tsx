@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Home from './pages/Home';
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
+import {HashRouter, Redirect, Route, Switch} from 'react-router-dom';
 import WeeklyTimeTable from './pages/WeeklyTimeTable';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <Switch>
         <Route exact path="/">
           <Home />
@@ -18,7 +18,7 @@ ReactDOM.render(
         </Route>
         <Redirect to="/weekly-timetable"/>
       </Switch>
-    </BrowserRouter>
+    </HashRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
