@@ -17,8 +17,9 @@ jobs:
           command: |
             cd reactjs-weekly-timetable
             git pull
+            docker build -t rwtimetable .
             docker stop rwtimetable || true
-            docker run --rm --name rwtimetable -d -p 3000:3000 -v $PWD:/app -w /app node:lts /bin/bash -c "yarn install && yarn start"
+            docker run --rm -dp 3000:80 --name rwtimetable rwtimetable
           host: md.tru.io
           user: root
           key: ${{ secrets.PRIVATE_KEY}}
