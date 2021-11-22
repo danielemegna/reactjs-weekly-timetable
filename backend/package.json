@@ -1,0 +1,13 @@
+{
+  "name": "ts",
+  "description": "Lets try this tecnology",
+  "version": "1.0.0",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.7",
+    "typescript": "^4.3.4"
+  },
+  "dependencies": {
+    "@types/node": "^15.12.4"
+  }
+}
