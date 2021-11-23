@@ -32,7 +32,9 @@ export default class ShiftsRepository {
     })
   }
 
-  private filePathFor = (date: Moment) => './store/' + date.format('yyyyMMDD') + '.json'
+  private filePathFor(date: Moment) {
+    return './store/' + date.startOf('week').format('yyyyMMDD') + '.json'
+  }
 
   private weekShiftsTemplateFor(startOfWeek: Moment): WeekShifts {
     return {
