@@ -31,3 +31,5 @@ yarn-error.log*
 
 # allow repo-local .npmrc
 .npmrc
+
+store/*.json

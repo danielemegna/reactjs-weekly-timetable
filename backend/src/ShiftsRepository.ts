@@ -1,11 +1,37 @@
+import fs from 'fs'
 import { Moment } from 'moment'
 import { WeekShifts } from './WeekShifts'
 
 export default class ShiftsRepository {
 
   getFor(date: Moment): WeekShifts {
-    return this.weekShiftsTemplateFor(date)
+    try {
+      console.log(`Retrieving shifts for ${date} ...`)
+      const filePath = this.filePathFor(date)
+      const fileRawContent = fs.readFileSync(filePath, 'utf-8')
+      const weekShifts = JSON.parse(fileRawContent)
+      console.log(`${filePath} found, use it`);
+      return weekShifts
+    } catch (error) {
+      console.log(`Cannot find shifts for ${date}, return template and init file ..`);
+      const template = this.weekShiftsTemplateFor(date)
+        ; (async () => { this.store(date, template) })()
+      return template
+    }
   }
+
+  private store(date: Moment, weekShifts: WeekShifts) {
+    const filePath = this.filePathFor(date)
+    fs.writeFile(filePath, JSON.stringify(weekShifts), (error) => {
+      if (error) {
+        console.log(`Cannot write ${filePath} file to filesystem`, error);
+        throw error;
+      }
+      console.log(`${filePath} written to filesystem`);
+    })
+  }
+
+  private filePathFor = (date: Moment) => './store/' + date.format('yyyyMMDD') + '.json'
 
   private weekShiftsTemplateFor(date: Moment): WeekShifts {
     return {
