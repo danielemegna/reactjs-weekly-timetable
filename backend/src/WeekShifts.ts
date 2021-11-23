@@ -1,10 +1,12 @@
+import { Moment } from "moment"
+
 export type WeekShifts  = {
-  date: String
+  date: Moment
   shifts: Shift[]
 }
 
 export type Shift = {
-  date: String
+  date: Moment
   morning: Person[]
   afternoon: Person[]
 }
