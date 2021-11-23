@@ -29,7 +29,7 @@ export default function WeeklyTimeTable() {
 function TopLogo() : JSX.Element {
   return (
       <div style={{textAlign: "center", paddingBottom: "4px"}}>
-        <img style={{ width: "8em" }} src={ae_logo} />
+        <img alt='Animal Emergency logo' style={{ width: "8em" }} src={ae_logo} />
       </div>
   )
 }
