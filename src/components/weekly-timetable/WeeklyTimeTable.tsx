@@ -1,20 +1,13 @@
-import moment from 'moment'
+import axios from 'axios';
+import moment, { Moment } from 'moment'
+import { useEffect, useState } from 'react';
 import style from './WeeklyTimeTable.module.scss'
+import { WeekShifts } from './WeekShifts'
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 interface Props {
-  startOfWeek: moment.Moment
-}
-
-function shiftsFromDate(date: moment.Moment): string[][] {
-  return [
-    ["Cristina","Anna"],
-    ["Anna","Cristina & girls"],
-    ["Eleonora, Cristina","Anna"],
-    ["Anna","Sonia"],
-    ["Eleonora","Cristina & girls"],
-    ["Anna, Monica, Erika, Elisa","Daniele, Stefania, Giona"],
-    ["Barbara, Laura, Elena, Cinzia","Anna, Rossana"],
-  ].sort( () => .5 - Math.random() );
+  startOfWeek: Moment
 }
 
 function colorFromWeekNumber(n: number): string {
@@ -25,9 +18,25 @@ function colorFromWeekNumber(n: number): string {
   return CLASSES[n % CLASSES.length]
 }
 
-export default function WeeklyTimeTable({startOfWeek}: Props) {
-  const shifts = shiftsFromDate(startOfWeek)
+async function fetchShifts(startOfWeek: Moment, setWeekShifts: React.Dispatch<React.SetStateAction<WeekShifts | null>>) {
+  try {
+    console.log(`Fetching shifts from ${BACKEND_URL} ...`)
+    const response = await axios.get(BACKEND_URL + '/week/' + startOfWeek.format('yyyy-MM-DD'))
+    console.log('Shifts fetched!')
+    setWeekShifts(response.data)
+  } catch (error) {
+    console.log('Error fetching shifts', error)
+    setWeekShifts(null)
+  }
+}
+
+export default function WeeklyTimeTable({ startOfWeek }: Props) {
+  const [weekShifts, setWeekShifts] = useState<WeekShifts | null>(null)
   const weekColor = colorFromWeekNumber(startOfWeek.week())
+
+  useEffect(() => {
+    fetchShifts(startOfWeek, setWeekShifts)
+  }, [startOfWeek])
 
   return (
     <table className={style.timetable + " " + weekColor}>
@@ -40,11 +49,11 @@ export default function WeeklyTimeTable({startOfWeek}: Props) {
       </thead>
       <tbody>
         {
-          shifts.map((shift, index) => {
+          weekShifts && weekShifts.shifts.map((shift, index) => {
             return <tr key={index}>
-              <td>{startOfWeek.clone().add(index, 'days').format("ddd D")}</td>
-              <td>{shift[0]}</td>
-              <td>{shift[1]}</td>
+              <td>{moment(shift.date).format("ddd D")}</td>
+              <td>{shift.morning.map((p) => p.name).join(', ')}</td>
+              <td>{shift.afternoon.map((p) => p.name).join(', ')}</td>
             </tr>
           })
         }
