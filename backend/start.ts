@@ -15,7 +15,11 @@ http.createServer((request, response) => {
     if (method == 'GET' && url?.startsWith('/week/')) {
       const date = parseDate(url.split('/')[2])
       const shifts = GetWeekShiftsUseCase(date)
-      response.writeHead(200, { 'Content-Type': 'application/javascript' })
+      response.writeHead(200, {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin' : 'http://localhost:3000',
+        'Cache-Control': 'must-revalidate,no-cache,no-store'
+      })
       response.end(JSON.stringify(shifts))
       return
     }
