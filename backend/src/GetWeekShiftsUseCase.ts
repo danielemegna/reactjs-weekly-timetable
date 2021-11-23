@@ -1,18 +1,4 @@
-type WeekShifts  = {
-  date: String
-  shifts: Shift[]
-}
-
-type Shift = {
-  date: String
-  morning: Person[]
-  afternoon: Person[]
-}
-
-type Person = {
-  name: String
-  color: String
-}
+import { WeekShifts } from "./WeekShifts"
 
 const GetWeekShiftsUseCase = (date: String) : WeekShifts => {
     console.log(date)
