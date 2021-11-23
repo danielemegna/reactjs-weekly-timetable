@@ -1,5 +1,6 @@
 import fs from 'fs'
 import { Moment } from 'moment'
+import 'moment/locale/it'
 import { WeekShifts } from './WeekShifts'
 
 export default class ShiftsRepository {
@@ -33,12 +34,13 @@ export default class ShiftsRepository {
 
   private filePathFor = (date: Moment) => './store/' + date.format('yyyyMMDD') + '.json'
 
-  private weekShiftsTemplateFor(date: Moment): WeekShifts {
+  private weekShiftsTemplateFor(startOfWeek: Moment): WeekShifts {
     return {
-      date: '2021-11-22',
+      date: startOfWeek.format('yyyy-MM-DD'),
       shifts: [
         {
-          date: '2021-11-22',
+          // lun
+          date: startOfWeek.format('yyyy-MM-DD'),
           morning: [
             { name: 'Anna', color: 'default' },
             { name: 'Giuliana', color: 'default' }
@@ -50,7 +52,8 @@ export default class ShiftsRepository {
           ]
         },
         {
-          date: '2021-11-23',
+          // mar
+          date: startOfWeek.clone().add(1, 'days').format('yyyy-MM-DD'),
           morning: [
             { name: 'Cristina', color: 'default' },
             { name: 'Eleonora', color: 'default' },
@@ -62,7 +65,8 @@ export default class ShiftsRepository {
           ]
         },
         {
-          date: '2021-11-24',
+          // mer
+          date: startOfWeek.clone().add(2, 'days').format('yyyy-MM-DD'),
           morning: [
             { name: 'Sonia', color: 'green' },
             { name: 'Anna', color: 'default' },
@@ -72,7 +76,8 @@ export default class ShiftsRepository {
           afternoon: []
         },
         {
-          date: '2021-11-25',
+          // gio
+          date: startOfWeek.clone().add(3, 'days').format('yyyy-MM-DD'),
           morning: [
             { name: 'Cristiana', color: 'default' },
             { name: 'Giuliana', color: 'default' }
@@ -82,7 +87,8 @@ export default class ShiftsRepository {
           ]
         },
         {
-          date: '2021-11-26',
+          // ven
+          date: startOfWeek.clone().add(4, 'days').format('yyyy-MM-DD'),
           morning: [
             { name: 'Anna', color: 'default' },
           ],
@@ -91,7 +97,8 @@ export default class ShiftsRepository {
           ]
         },
         {
-          date: '2021-11-27',
+          // sab
+          date: startOfWeek.clone().add(5, 'days').format('yyyy-MM-DD'),
           morning: [
             { name: 'Gaia', color: 'default' },
             { name: 'Laura e Rina in affiancamento', color: 'blue' },
@@ -102,7 +109,8 @@ export default class ShiftsRepository {
           ]
         },
         {
-          date: '2021-11-28',
+          // dom
+          date: startOfWeek.clone().add(6, 'days').format('yyyy-MM-DD'),
           morning: [
             { name: 'Barbara', color: 'default' },
             { name: 'Laura', color: 'default' },

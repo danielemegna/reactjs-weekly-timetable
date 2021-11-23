@@ -1,5 +1,6 @@
 import http = require('http');
 import moment, { Moment } from 'moment';
+import 'moment/locale/it'
 import GetWeekShiftsUseCase from './src/GetWeekShiftsUseCase';
 
 http.createServer((request, response) => {
