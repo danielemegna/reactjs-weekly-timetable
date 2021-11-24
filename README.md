@@ -6,6 +6,8 @@ Temporary dev node docker env:
 
 ```
 $ docker run --rm -it -p 3000:3000 -v $PWD:/app -w /app node:lts bash
+# yarn install
+# yarn start
 ```
 
 Production ready start with Dockerfile:
