@@ -20,6 +20,10 @@ jobs:
             docker build -t rwtimetable .
             docker stop rwtimetable || true
             docker run --rm -dp 3000:80 --name rwtimetable rwtimetable
+            cd backend
+            docker build -t wtapi .
+            docker stop wtapi || true
+            docker run --rm -dp 8125:8125 -v $PWD/store:/app/store --name wtapi wtapi
           host: md.tru.io
           user: root
           key: ${{ secrets.PRIVATE_KEY}}
