@@ -15,9 +15,19 @@ http.createServer((request, response) => {
     if (method == 'GET' && url?.startsWith('/week/')) {
       const date = parseDate(url.split('/')[2])
       const shifts = GetWeekShiftsUseCase(date)
+      const allowedOrigins = [
+        'http://localhost:3000',
+        'http://md.tru.io:3000
+      ]
+      var accessControlAllowOrigin = '';
+      const origin = request.headers?.origin ?? 'unknown'
+      console.log('the origin ' + origin)
+      if (allowedOrigins.includes(origin)) {
+        accessControlAllowOrigin = origin
+      }
       response.writeHead(200, {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin' : 'http://localhost:3000',
+        'Access-Control-Allow-Origin' : accessControlAllowOrigin,
         'Cache-Control': 'must-revalidate,no-cache,no-store'
       })
       response.end(JSON.stringify(shifts))
