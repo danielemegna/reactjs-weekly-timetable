@@ -1,4 +1,4 @@
-import http = require('http');
+import http, { IncomingMessage, ServerResponse } from 'http';
 import moment, { Moment } from 'moment';
 import 'moment/locale/it'
 import GetWeekShiftsUseCase from './src/GetWeekShiftsUseCase';
@@ -15,22 +15,7 @@ http.createServer((request, response) => {
     if (method == 'GET' && url?.startsWith('/week/')) {
       const date = parseDate(url.split('/')[2])
       const shifts = GetWeekShiftsUseCase(date)
-      const allowedOrigins = [
-        'http://localhost:3000',
-        'http://md.tru.io:3000'
-      ]
-      var accessControlAllowOrigin = '';
-      const origin = request.headers?.origin ?? 'unknown'
-      console.log('the origin ' + origin)
-      if (allowedOrigins.includes(origin)) {
-        accessControlAllowOrigin = origin
-      }
-      response.writeHead(200, {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin' : accessControlAllowOrigin,
-        'Cache-Control': 'must-revalidate,no-cache,no-store'
-      })
-      response.end(JSON.stringify(shifts))
+      jsonResponseWith(shifts, 200, response, request);
       return
     }
     console.log('No route found')
@@ -50,4 +35,22 @@ function parseDate(dateString: string): Moment {
     throw Error(`Not valid date provided: ${dateString}`)
 
   return moment(dateString)
+}
+
+function jsonResponseWith(body: object, statusCode: number, response: ServerResponse, request: IncomingMessage) {
+  response.writeHead(statusCode, {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': accessControlAllowOriginFor(request),
+    'Cache-Control': 'must-revalidate,no-cache,no-store'
+  });
+  response.end(JSON.stringify(body));
+}
+
+function accessControlAllowOriginFor(request: IncomingMessage): string {
+      const origin = request.headers?.origin ?? 'unknown'
+      const allowedOrigins = [
+        'http://localhost:3000',
+        'http://md.tru.io:3000'
+      ]
+      return allowedOrigins.includes(origin) ? origin : ''
 }
