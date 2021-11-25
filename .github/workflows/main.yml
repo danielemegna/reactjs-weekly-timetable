@@ -17,7 +17,7 @@ jobs:
           command: |
             cd reactjs-weekly-timetable
             git pull
-            docker build -t rwtimetable .
+            docker build -t rwtimetable --build-arg REACT_APP_BACKEND_URL=http://md.tru.io:8125 .
             docker stop rwtimetable || true
             docker run --rm -dp 3000:80 --name rwtimetable rwtimetable
             cd backend
