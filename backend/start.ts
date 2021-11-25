@@ -17,7 +17,7 @@ http.createServer((request, response) => {
       const shifts = GetWeekShiftsUseCase(date)
       const allowedOrigins = [
         'http://localhost:3000',
-        'http://md.tru.io:3000
+        'http://md.tru.io:3000'
       ]
       var accessControlAllowOrigin = '';
       const origin = request.headers?.origin ?? 'unknown'
