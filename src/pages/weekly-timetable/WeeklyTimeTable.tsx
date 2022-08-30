@@ -8,7 +8,7 @@ import { default as WeeklyTimeTableComponent } from '../../components/weekly-tim
 
 export default function WeeklyTimeTable() {
   const now = moment().clone().startOf('week')
-  const [startOfWeek, setStartOfWeek] = useState(now)
+  const [startOfWeek, setStartOfWeek] = useState<moment.Moment>(now)
 
   return (
     <div style={{ display: "inline-block", padding: "0.5em" }} >
