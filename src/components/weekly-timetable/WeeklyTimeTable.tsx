@@ -1,6 +1,6 @@
 import axios from 'axios';
 import moment, { Moment } from 'moment'
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import style from './WeeklyTimeTable.module.scss'
 import { WeekShifts } from './WeekShifts'
 
@@ -18,7 +18,7 @@ function colorFromWeekNumber(n: number): string {
   return CLASSES[n % CLASSES.length]
 }
 
-async function fetchShifts(startOfWeek: Moment, setWeekShifts: React.Dispatch<React.SetStateAction<WeekShifts | null>>) {
+async function fetchShifts(startOfWeek: Moment, setWeekShifts: Dispatch<SetStateAction<WeekShifts | null>>) {
   try {
     console.log(`Fetching shifts from ${BACKEND_URL} ...`)
     const response = await axios.get(BACKEND_URL + '/week/' + startOfWeek.format('yyyy-MM-DD'))
