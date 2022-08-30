@@ -1,12 +1,11 @@
 import { Dispatch, SetStateAction, useRef, useState } from 'react'
 import style from './AuthenticationModal.module.scss'
 
-type Props = {
+interface Props {
   setAuthenticatedUser: Dispatch<SetStateAction<String | null>>
 }
 
 export default function AuthenticationModal({ setAuthenticatedUser }: Props) {
-
   const [toBeShown, setToBeShown] = useState<boolean>(true)
   const [invalidUsername, setInvalidUsername] = useState<boolean>(false)
   const authenticationInputBox = useRef<HTMLInputElement>(null);
