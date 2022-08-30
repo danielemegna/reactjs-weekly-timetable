@@ -9,10 +9,11 @@ import { default as WeeklyTimeTableComponent } from '../../components/weekly-tim
 export default function WeeklyTimeTable() {
   const now = moment().clone().startOf('week')
   const [startOfWeek, setStartOfWeek] = useState<moment.Moment>(now)
+  const [_authenticatedUser, setAuthenticatedUser] = useState<String | null>(null)
 
   return (
     <div style={{ display: "inline-block", padding: "0.5em" }} >
-      <AuthenticationModal />
+      <AuthenticationModal setAuthenticatedUser={setAuthenticatedUser} />
       <TopLogo />
       <WeeklyTimeTableComponent startOfWeek={startOfWeek} />
       <ChangeWeekButton
