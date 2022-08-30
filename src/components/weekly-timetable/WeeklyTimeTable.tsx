@@ -1,14 +1,19 @@
 import axios from 'axios';
 import moment, { Moment } from 'moment'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { AuthenticatedUser } from '../../pages/weekly-timetable/WeeklyTimeTable';
 import style from './WeeklyTimeTable.module.scss'
 import { WeekShifts } from './WeekShifts'
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 interface Props {
-  startOfWeek: Moment
+  startOfWeek: Moment,
+  authenticatedUser: AuthenticatedUser
 }
+
+type WeekDayIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6
+type DayHalf = 'morning' | 'afternoon'
 
 function colorFromWeekNumber(n: number): string {
   const CLASSES = [
@@ -16,6 +21,12 @@ function colorFromWeekNumber(n: number): string {
     style.orange, style.yellow, style.pink, style.red
   ]
   return CLASSES[n % CLASSES.length]
+}
+
+function onShiftChosen(weekDayIndex: WeekDayIndex, dayHalf: DayHalf, authenticatedUser: AuthenticatedUser): void {
+  if(!authenticatedUser) return
+
+  alert(`Shift chosen! ${weekDayIndex} ${dayHalf}`)
 }
 
 async function fetchShifts(startOfWeek: Moment, setWeekShifts: Dispatch<SetStateAction<WeekShifts | null>>) {
@@ -30,7 +41,7 @@ async function fetchShifts(startOfWeek: Moment, setWeekShifts: Dispatch<SetState
   }
 }
 
-export default function WeeklyTimeTable({ startOfWeek }: Props) {
+export default function WeeklyTimeTable({ startOfWeek, authenticatedUser }: Props) {
   const [weekShifts, setWeekShifts] = useState<WeekShifts | null>(null)
   const weekColor = colorFromWeekNumber(startOfWeek.week())
 
@@ -50,10 +61,15 @@ export default function WeeklyTimeTable({ startOfWeek }: Props) {
       <tbody>
         {
           weekShifts && weekShifts.shifts.map((shift, index) => {
-            return <tr key={index}>
+            const weekDayIndex = index as WeekDayIndex
+            return <tr key={weekDayIndex}>
               <td>{moment(shift.date).format("ddd D")}</td>
-              <td>{shift.morning.map((p) => p.name).join(', ')}</td>
-              <td>{shift.afternoon.map((p) => p.name).join(', ')}</td>
+              <td onClick={() => onShiftChosen(weekDayIndex, 'morning', authenticatedUser)}>
+                {shift.morning.map((p) => p.name).join(', ')}
+              </td>
+              <td onClick={() => onShiftChosen(weekDayIndex, 'afternoon', authenticatedUser)}>
+                {shift.afternoon.map((p) => p.name).join(', ')}
+              </td>
             </tr>
           })
         }

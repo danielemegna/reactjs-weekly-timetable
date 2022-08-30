@@ -17,7 +17,7 @@ export default function WeeklyTimeTable() {
     <div style={{ display: "inline-block", padding: "0.5em" }} >
       <AuthenticationModal setAuthenticatedUser={setAuthenticatedUser} />
       <TopLogo />
-      <WeeklyTimeTableComponent startOfWeek={startOfWeek} />
+      <WeeklyTimeTableComponent authenticatedUser={authenticatedUser} startOfWeek={startOfWeek} />
       <ChangeWeekButton
         direction={ChangeWeekButtonDirection.PREVIOUS}
         onClick={() => setStartOfWeek(startOfWeek.clone().subtract(1, 'week'))} />
