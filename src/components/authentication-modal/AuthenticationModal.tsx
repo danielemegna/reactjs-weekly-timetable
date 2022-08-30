@@ -1,8 +1,9 @@
 import { Dispatch, SetStateAction, useRef, useState } from 'react'
+import { AuthenticatedUser } from '../../pages/weekly-timetable/WeeklyTimeTable'
 import style from './AuthenticationModal.module.scss'
 
 interface Props {
-  setAuthenticatedUser: Dispatch<SetStateAction<String | null>>
+  setAuthenticatedUser: Dispatch<SetStateAction<AuthenticatedUser>>
 }
 
 export default function AuthenticationModal({ setAuthenticatedUser }: Props) {

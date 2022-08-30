@@ -6,10 +6,12 @@ import AuthenticationModal from "../../components/authentication-modal/Authentic
 import { ChangeWeekButton, Direction as ChangeWeekButtonDirection } from "../../components/change-week-button/ChangeWeekButton";
 import { default as WeeklyTimeTableComponent } from '../../components/weekly-timetable/WeeklyTimeTable';
 
+export type AuthenticatedUser = String | null
+
 export default function WeeklyTimeTable() {
   const now = moment().clone().startOf('week')
   const [startOfWeek, setStartOfWeek] = useState<moment.Moment>(now)
-  const [_authenticatedUser, setAuthenticatedUser] = useState<String | null>(null)
+  const [authenticatedUser, setAuthenticatedUser] = useState<AuthenticatedUser>(null)
 
   return (
     <div style={{ display: "inline-block", padding: "0.5em" }} >
