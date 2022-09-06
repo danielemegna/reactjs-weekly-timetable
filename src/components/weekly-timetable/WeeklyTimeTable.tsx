@@ -1,11 +1,11 @@
-import axios from 'axios';
-import moment, { Moment } from 'moment'
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import moment, { Moment } from 'moment';
+import { useEffect, useState } from 'react';
+import { BackendGateway } from '../../gateway/backend';
 import { AuthenticatedUser } from '../../pages/weekly-timetable/WeeklyTimeTable';
-import style from './WeeklyTimeTable.module.scss'
-import { WeekShifts } from './WeekShifts'
+import style from './WeeklyTimeTable.module.scss';
+import { WeekShifts } from './WeekShifts';
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const backendGateway = new BackendGateway(process.env.REACT_APP_BACKEND_URL ?? "undefined-REACT_APP_BACKEND_URL")
 
 interface Props {
   startOfWeek: Moment,
@@ -27,24 +27,12 @@ function onShiftChosen(date: Moment, dayHalf: DayHalf, authenticatedUser: Authen
   alert(`Shift chosen! ${date} ${dayHalf}`)
 }
 
-async function fetchShifts(startOfWeek: Moment, setWeekShifts: Dispatch<SetStateAction<WeekShifts | null>>) {
-  try {
-    console.log(`Fetching shifts from ${BACKEND_URL} ...`)
-    const response = await axios.get(BACKEND_URL + '/week/' + startOfWeek.format('yyyy-MM-DD'))
-    console.log('Shifts fetched!')
-    setWeekShifts(response.data)
-  } catch (error) {
-    console.log('Error fetching shifts', error)
-    setWeekShifts(null)
-  }
-}
-
 export default function WeeklyTimeTable({ startOfWeek, authenticatedUser }: Props) {
   const [weekShifts, setWeekShifts] = useState<WeekShifts | null>(null)
   const weekColor = colorFromWeekNumber(startOfWeek.week())
 
   useEffect(() => {
-    fetchShifts(startOfWeek, setWeekShifts)
+    backendGateway.fetchShiftsFor(startOfWeek).then((it) => setWeekShifts(it))
   }, [startOfWeek])
 
   return (
