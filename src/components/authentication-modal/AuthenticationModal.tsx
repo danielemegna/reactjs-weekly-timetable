@@ -36,7 +36,7 @@ export default function AuthenticationModal({ setAuthenticatedUser }: Props) {
     <div className={style.overlay}>
       <form>
         <h3>🐱 Dimmi chi sei!</h3>
-        <input type="text" ref={authenticationInputBox} />
+        <input type="text" ref={authenticationInputBox} onKeyPress={(e) => e.key === 'Enter' && onLoginSubmit() } />
         <br />
         {invalidUsername && (<label className={style.errormessage}>Username non valido!</label>)}
         <br />
