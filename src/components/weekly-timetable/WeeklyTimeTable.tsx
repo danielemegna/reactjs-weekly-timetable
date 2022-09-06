@@ -12,7 +12,6 @@ interface Props {
   authenticatedUser: AuthenticatedUser
 }
 
-type WeekDayIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6
 type DayHalf = 'morning' | 'afternoon'
 
 function colorFromWeekNumber(n: number): string {
@@ -23,10 +22,9 @@ function colorFromWeekNumber(n: number): string {
   return CLASSES[n % CLASSES.length]
 }
 
-function onShiftChosen(weekDayIndex: WeekDayIndex, dayHalf: DayHalf, authenticatedUser: AuthenticatedUser): void {
-  if(!authenticatedUser) return
-
-  alert(`Shift chosen! ${weekDayIndex} ${dayHalf}`)
+function onShiftChosen(date: Moment, dayHalf: DayHalf, authenticatedUser: AuthenticatedUser): void {
+  if (!authenticatedUser) return
+  alert(`Shift chosen! ${date} ${dayHalf}`)
 }
 
 async function fetchShifts(startOfWeek: Moment, setWeekShifts: Dispatch<SetStateAction<WeekShifts | null>>) {
@@ -61,13 +59,12 @@ export default function WeeklyTimeTable({ startOfWeek, authenticatedUser }: Prop
       <tbody>
         {
           weekShifts && weekShifts.shifts.map((shift, index) => {
-            const weekDayIndex = index as WeekDayIndex
-            return <tr key={weekDayIndex}>
+            return <tr key={index}>
               <td>{moment(shift.date).format("ddd D")}</td>
-              <td onClick={() => onShiftChosen(weekDayIndex, 'morning', authenticatedUser)}>
+              <td onClick={() => onShiftChosen(shift.date, 'morning', authenticatedUser)}>
                 {shift.morning.map((p) => p.name).join(', ')}
               </td>
-              <td onClick={() => onShiftChosen(weekDayIndex, 'afternoon', authenticatedUser)}>
+              <td onClick={() => onShiftChosen(shift.date, 'afternoon', authenticatedUser)}>
                 {shift.afternoon.map((p) => p.name).join(', ')}
               </td>
             </tr>
