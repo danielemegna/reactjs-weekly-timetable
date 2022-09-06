@@ -1,7 +1,6 @@
 import axios from "axios";
-import { Moment } from "moment"
-import { WeekShifts } from "../components/weekly-timetable/WeekShifts";
-
+import moment, { Moment } from 'moment';
+import { Shift, WeekShifts } from "../components/weekly-timetable/WeekShifts";
 
 export class BackendGateway {
   baseUrl: string
@@ -16,11 +15,27 @@ export class BackendGateway {
       console.log(`Fetching shifts from ${requestUrl} ...`)
       const response = await axios.get(requestUrl)
       console.log('Shifts fetched!')
-      return response.data as WeekShifts
+      return this.adaptToWeekShifts(response.data)
     } catch (error) {
       console.log('Error fetching shifts', error)
       throw error
     }
   }
 
+  private adaptToWeekShifts(json: any): WeekShifts {
+    return {
+      date: moment(json.date),
+      shifts: json.shifts.map((shift: any) => this.adaptToShift(shift))
+    } as WeekShifts
+  }
+
+
+  private adaptToShift(json: any) {
+    return {
+      date: moment(json.date),
+      morning: json.morning,
+      afternoon: json.afternoon,
+    } as Shift;
+  }
 }
+

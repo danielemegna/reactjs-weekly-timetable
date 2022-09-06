@@ -1,4 +1,4 @@
-import moment, { Moment } from 'moment';
+import { Moment } from 'moment';
 import { useEffect, useState } from 'react';
 import { BackendGateway } from '../../gateway/backend';
 import { AuthenticatedUser } from '../../pages/weekly-timetable/WeeklyTimeTable';
@@ -32,7 +32,10 @@ export default function WeeklyTimeTable({ startOfWeek, authenticatedUser }: Prop
   const weekColor = colorFromWeekNumber(startOfWeek.week())
 
   useEffect(() => {
-    backendGateway.fetchShiftsFor(startOfWeek).then((it) => setWeekShifts(it))
+    backendGateway.fetchShiftsFor(startOfWeek).then((it) => {
+      console.log(it)
+      return setWeekShifts(it);
+    })
   }, [startOfWeek])
 
   return (
@@ -48,7 +51,7 @@ export default function WeeklyTimeTable({ startOfWeek, authenticatedUser }: Prop
         {
           weekShifts && weekShifts.shifts.map((shift, index) => {
             return <tr key={index}>
-              <td>{moment(shift.date).format("ddd D")}</td>
+              <td>{shift.date.format("ddd D")}</td>
               <td onClick={() => onShiftChosen(shift.date, 'morning', authenticatedUser)}>
                 {shift.morning.map((p) => p.name).join(', ')}
               </td>
