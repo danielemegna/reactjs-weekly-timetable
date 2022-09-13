@@ -19,6 +19,22 @@ http.createServer((request: IncomingMessage, response: ServerResponse) => {
       jsonResponseWith(shifts, 200, response, request);
       return
     }
+    if (url?.startsWith('/togglePresence/')) {
+      switch(method) {
+        case 'OPTIONS':
+          emptyResponse(204, response, request)
+          return
+        case 'POST':
+          const date = parseDate(url.split('/')[2])
+          console.log('Toggling presence!', date)
+          //TogglePresenceUseCase(date)
+          emptyResponse(201, response, request)
+          return
+      }
+      console.log('Method not allowed!')
+      emptyResponse(405, response, request)
+      return
+    }
 
     console.log('No route found')
     response.writeHead(404)
@@ -45,6 +61,11 @@ function jsonResponseWith(body: object, statusCode: number, response: ServerResp
     ...CORSAndCacheHeaders(request),
   })
   response.end(JSON.stringify(body));
+}
+
+function emptyResponse(statusCode: number, response: ServerResponse, request: IncomingMessage) {
+  response.writeHead(statusCode, CORSAndCacheHeaders(request))
+  response.end();
 }
 
 function CORSAndCacheHeaders(request: IncomingMessage) {
