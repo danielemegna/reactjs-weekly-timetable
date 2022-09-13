@@ -36,13 +36,11 @@ http.createServer((request: IncomingMessage, response: ServerResponse) => {
       return
     }
 
-    console.log('No route found')
-    response.writeHead(404)
-    response.end()
+    console.log('Route not found!')
+    emptyResponse(404, response, request)
   } catch (error) {
-    console.log('Error during request handling', error)
-    response.writeHead(500)
-    response.end()
+    console.log('Error during request handling!', error)
+    emptyResponse(500, response, request)
   }
 }).listen(8125);
 
