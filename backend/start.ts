@@ -3,7 +3,7 @@ import moment, { Moment } from 'moment';
 import 'moment/locale/it'
 import GetWeekShiftsUseCase from './src/GetWeekShiftsUseCase';
 
-http.createServer((request, response) => {
+http.createServer((request: IncomingMessage, response: ServerResponse) => {
   try {
     const { url, method } = request
     console.log(`Received ${method} on ${url}`)
