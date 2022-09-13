@@ -1,7 +1,7 @@
 import fs from 'fs'
 import { Moment } from 'moment'
 import 'moment/locale/it'
-import { WeekShifts } from './WeekShifts'
+import { WeekShifts } from '../WeekShifts'
 
 export default class ShiftsRepository {
 

@@ -1,7 +1,7 @@
 import http, { IncomingMessage, ServerResponse } from 'http';
 import moment, { Moment } from 'moment';
 import 'moment/locale/it'
-import GetWeekShiftsUseCase from './src/GetWeekShiftsUseCase';
+import GetWeekShiftsUseCase from './src/usecases/GetWeekShiftsUseCase';
 
 http.createServer((request: IncomingMessage, response: ServerResponse) => {
   try {
