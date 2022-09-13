@@ -42,7 +42,6 @@ export class BackendGateway {
 
   async togglePresence(date: Moment, dayHalf: DayHalf, username: String): Promise<void> {
     try {
-      console.log(date)
       const requestUrl = this.baseUrl + '/togglePresence/' + date.format('yyyy-MM-DD')
       console.log(`Toggle shifts presence at ${requestUrl} ...`)
       const response = await axios.post(requestUrl, { dayHalf: dayHalf, username: username })
