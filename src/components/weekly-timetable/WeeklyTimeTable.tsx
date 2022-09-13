@@ -1,6 +1,6 @@
 import { Moment } from 'moment';
 import { useEffect, useState } from 'react';
-import { BackendGateway } from '../../gateway/backend';
+import { BackendGateway, DayHalf } from '../../gateway/backend';
 import { AuthenticatedUser } from '../../pages/weekly-timetable/WeeklyTimeTable';
 import style from './WeeklyTimeTable.module.scss';
 import { WeekShifts } from './WeekShifts';
@@ -11,8 +11,6 @@ interface Props {
   startOfWeek: Moment,
   authenticatedUser: AuthenticatedUser
 }
-
-type DayHalf = 'morning' | 'afternoon'
 
 function colorFromWeekNumber(n: number): string {
   const CLASSES = [
@@ -25,6 +23,7 @@ function colorFromWeekNumber(n: number): string {
 function onShiftChosen(date: Moment, dayHalf: DayHalf, authenticatedUser: AuthenticatedUser): void {
   if (!authenticatedUser) return
   alert(`Shift chosen! ${date} ${dayHalf}`)
+  backendGateway.togglePresence(date, dayHalf, authenticatedUser)
 }
 
 export default function WeeklyTimeTable({ startOfWeek, authenticatedUser }: Props) {

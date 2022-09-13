@@ -2,6 +2,8 @@ import axios from "axios";
 import moment, { Moment } from 'moment';
 import { Shift, WeekShifts } from "../components/weekly-timetable/WeekShifts";
 
+export type DayHalf = 'morning' | 'afternoon'
+
 export class BackendGateway {
   baseUrl: string
 
@@ -37,5 +39,21 @@ export class BackendGateway {
       afternoon: json.afternoon,
     } as Shift;
   }
+
+  async togglePresence(date: Moment, dayHalf: DayHalf, username: String): Promise<void> {
+    try {
+      console.log(date)
+      const requestUrl = this.baseUrl + '/togglePresence/' + date.format('yyyy-MM-DD')
+      console.log(`Toggle shifts presence at ${requestUrl} ...`)
+      const response = await axios.post(requestUrl, { dayHalf: dayHalf, username: username })
+      if(response.status !== 201) {
+        throw Error(`Unexpected status code ${response.status}`)
+      }
+    } catch (error) {
+      console.log('Error on shift toggle', error)
+      throw error
+    }
+  }
+
 }
 
