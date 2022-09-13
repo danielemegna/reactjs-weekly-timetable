@@ -25,3 +25,7 @@ Production ready start with Dockerfile:
 ```
 $ docker build -t wtapi .
 $ docker run --rm -dp 8125:8125 -v $PWD/store:/app/store --name wtapi wtapi
+
+## Useful material
+
+- https://nodejs.dev/en/learn/get-http-request-body-data-using-nodejs/
