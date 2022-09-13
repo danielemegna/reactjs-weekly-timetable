@@ -7,6 +7,7 @@ http.createServer((request, response) => {
   try {
     const { url, method } = request
     console.log(`Received ${method} on ${url}`)
+
     if (method == 'GET' && url == '/') {
       response.writeHead(200, { 'Content-Type': 'text/plain' })
       response.end('Hello, world!', 'utf-8')
@@ -18,6 +19,7 @@ http.createServer((request, response) => {
       jsonResponseWith(shifts, 200, response, request);
       return
     }
+
     console.log('No route found')
     response.writeHead(404)
     response.end()
@@ -40,10 +42,17 @@ function parseDate(dateString: string): Moment {
 function jsonResponseWith(body: object, statusCode: number, response: ServerResponse, request: IncomingMessage) {
   response.writeHead(statusCode, {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': accessControlAllowOriginFor(request),
-    'Cache-Control': 'must-revalidate,no-cache,no-store'
-  });
+    ...CORSAndCacheHeaders(request),
+  })
   response.end(JSON.stringify(body));
+}
+
+function CORSAndCacheHeaders(request: IncomingMessage) {
+  return {
+    'Access-Control-Allow-Origin': accessControlAllowOriginFor(request),
+    'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
+    'Cache-Control': 'must-revalidate,no-cache,no-store',
+  }
 }
 
 function accessControlAllowOriginFor(request: IncomingMessage): string {
