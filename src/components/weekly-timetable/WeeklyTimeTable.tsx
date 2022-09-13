@@ -22,8 +22,12 @@ function colorFromWeekNumber(n: number): string {
 
 function onShiftChosen(date: Moment, dayHalf: DayHalf, authenticatedUser: AuthenticatedUser): void {
   if (!authenticatedUser) return
-  alert(`Shift chosen! ${date} ${dayHalf}`)
-  backendGateway.togglePresence(date, dayHalf, authenticatedUser)
+
+  const dayHalfLabel = dayHalf == 'morning' ? 'mattino' : 'sera'
+  const confirmationMessage = `${date.format('dddd D')} ${dayHalfLabel}, confermare?`
+  if (window.confirm(confirmationMessage)) {
+    backendGateway.togglePresence(date, dayHalf, authenticatedUser)
+  }
 }
 
 export default function WeeklyTimeTable({ startOfWeek, authenticatedUser }: Props) {
