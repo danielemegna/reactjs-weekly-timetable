@@ -1,7 +1,8 @@
 import { ServerResponse } from 'http';
 import moment, { Moment } from 'moment';
 import 'moment/locale/it';
-import GetWeekShiftsUseCase from '../usecases/GetWeekShiftsUseCase';
+import togglePresence from './routes/togglePresence';
+import weekRoute from './routes/week';
 
 export type ParsedRequest = {
   method: string,
@@ -11,42 +12,19 @@ export type ParsedRequest = {
 }
 
 export function handleReceivedRequest( request: ParsedRequest, response: ServerResponse) {
-    if (request.method == 'GET' && request.url == '/') {
-      response.writeHead(200, { 'Content-Type': 'text/plain' })
-      response.end('Hello, world!', 'utf-8')
-      return
-    }
 
-    if (request.method == 'GET' && request.url?.startsWith('/week/')) {
-      const date = parseDate(request.url.split('/')[2])
-      const shifts = GetWeekShiftsUseCase(date)
-      jsonResponseWith(shifts, 200, response, request.origin);
-      return
-    }
+    if(weekRoute.shouldHandle(request))
+      return weekRoute.handle(request, response)
 
-    if (request.url?.startsWith('/togglePresence/')) {
-      switch (request.method) {
-        case 'OPTIONS':
-          emptyResponse(204, response, request.origin)
-          return
-        case 'POST':
-          const date = parseDate(request.url.split('/')[2])
-          console.log('Toggling presence!', date)
-          //TogglePresenceUseCase(date)
-          emptyResponse(201, response, request.origin)
-          return
-      }
-
-      console.log('Method not allowed!')
-      emptyResponse(405, response, request.origin)
-      return
-    }
+    if(togglePresence.shouldHandle(request))
+      return togglePresence.handle(request, response)
 
     console.log('Route not found!')
     emptyResponse(404, response, request.origin)
+
 }
 
-function parseDate(dateString: string): Moment {
+export function parseDate(dateString: string): Moment {
   // TODO merge regex and moment validation
   const isValid = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/.test(dateString)
   if (!isValid)
@@ -55,17 +33,17 @@ function parseDate(dateString: string): Moment {
   return moment(dateString)
 }
 
-function jsonResponseWith(body: object, statusCode: number, response: ServerResponse, origin?: string) {
+export function jsonResponseWith(body: object, statusCode: number, response: ServerResponse, origin?: string) {
   response.writeHead(statusCode, {
     'Content-Type': 'application/json',
     ...CORSAndCacheHeaders(origin),
   })
-  response.end(JSON.stringify(body));
+  response.end(JSON.stringify(body))
 }
 
 export function emptyResponse(statusCode: number, response: ServerResponse, origin?: string) {
   response.writeHead(statusCode, CORSAndCacheHeaders(origin))
-  response.end();
+  response.end()
 }
 
 function CORSAndCacheHeaders(origin?: string) {
