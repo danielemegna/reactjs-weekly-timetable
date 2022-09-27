@@ -11,13 +11,13 @@ http.createServer((request: IncomingMessage, response: ServerResponse) => {
     request.on('data', chunk => receivedData += chunk);
     request.on('end', () => {
       const requestBody = parseRequestBody(receivedData)
-      const parseRequest: ParsedRequest = {
+      const parsedRequest: ParsedRequest = {
         method: method!,
         url: url!,
         requestBody: requestBody,
         origin: origin
       }
-      handleReceivedRequest(parseRequest, response)
+      handleReceivedRequest(parsedRequest, response)
     });
   } catch (error) {
     console.log('Error during request handling!', error)
