@@ -3,46 +3,47 @@ import moment, { Moment } from 'moment';
 import 'moment/locale/it';
 import GetWeekShiftsUseCase from '../usecases/GetWeekShiftsUseCase';
 
-export function handleReceivedRequest(
-  method: string | undefined,
-  url: string | undefined,
+export type ParsedRequest = {
+  method: string,
+  url: string,
   requestBody: string | undefined,
   origin: string | undefined,
-  response: ServerResponse
-) {
-    if (method == 'GET' && url == '/') {
+}
+
+export function handleReceivedRequest( request: ParsedRequest, response: ServerResponse) {
+    if (request.method == 'GET' && request.url == '/') {
       response.writeHead(200, { 'Content-Type': 'text/plain' })
       response.end('Hello, world!', 'utf-8')
       return
     }
 
-    if (method == 'GET' && url?.startsWith('/week/')) {
-      const date = parseDate(url.split('/')[2])
+    if (request.method == 'GET' && request.url?.startsWith('/week/')) {
+      const date = parseDate(request.url.split('/')[2])
       const shifts = GetWeekShiftsUseCase(date)
-      jsonResponseWith(shifts, 200, response, origin);
+      jsonResponseWith(shifts, 200, response, request.origin);
       return
     }
 
-    if (url?.startsWith('/togglePresence/')) {
-      switch (method) {
+    if (request.url?.startsWith('/togglePresence/')) {
+      switch (request.method) {
         case 'OPTIONS':
-          emptyResponse(204, response, origin)
+          emptyResponse(204, response, request.origin)
           return
         case 'POST':
-          const date = parseDate(url.split('/')[2])
+          const date = parseDate(request.url.split('/')[2])
           console.log('Toggling presence!', date)
           //TogglePresenceUseCase(date)
-          emptyResponse(201, response, origin)
+          emptyResponse(201, response, request.origin)
           return
       }
 
       console.log('Method not allowed!')
-      emptyResponse(405, response, origin)
+      emptyResponse(405, response, request.origin)
       return
     }
 
     console.log('Route not found!')
-    emptyResponse(404, response, origin)
+    emptyResponse(404, response, request.origin)
 }
 
 function parseDate(dateString: string): Moment {

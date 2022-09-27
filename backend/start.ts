@@ -1,6 +1,6 @@
 import http, { IncomingMessage, ServerResponse } from 'http';
 import 'moment/locale/it';
-import { emptyResponse, handleReceivedRequest } from './src/web/router';
+import { emptyResponse, handleReceivedRequest, ParsedRequest } from './src/web/router';
 
 http.createServer((request: IncomingMessage, response: ServerResponse) => {
   try {
@@ -11,7 +11,13 @@ http.createServer((request: IncomingMessage, response: ServerResponse) => {
     request.on('data', chunk => receivedData += chunk);
     request.on('end', () => {
       const requestBody = parseRequestBody(receivedData)
-      handleReceivedRequest(method, url, requestBody, origin, response)
+      const parseRequest: ParsedRequest = {
+        method: method!,
+        url: url!,
+        requestBody: requestBody,
+        origin: origin
+      }
+      handleReceivedRequest(parseRequest, response)
     });
   } catch (error) {
     console.log('Error during request handling!', error)
