@@ -25,19 +25,18 @@ http.createServer((request: IncomingMessage, response: ServerResponse) => {
   }
 }).listen(8125);
 
-function parseRequestBody(receivedData: string): string | undefined {
+function parseRequestBody(receivedData: string): any {
   if(!receivedData || receivedData == '') {
     console.log('Empty request body')
     return undefined
   }
 
   try {
-    const requestBody = JSON.parse(receivedData)
+    const requestBody: any = JSON.parse(receivedData)
     console.log(`Received request body: ${JSON.stringify(requestBody)}`)
     return requestBody
   } catch(error) {
-    console.log('Invalid request body')
+    console.log('Invalid not-empty request body', receivedData)
     return undefined
   }
 }
-

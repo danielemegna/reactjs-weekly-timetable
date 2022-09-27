@@ -7,7 +7,7 @@ import weekRoute from './routes/week';
 export type ParsedRequest = {
   method: string,
   url: string,
-  requestBody: string | undefined,
+  requestBody: any,
   origin: string | undefined,
 }
 
