@@ -1,4 +1,5 @@
 import { ServerResponse } from "http";
+import TogglePresenceUseCase, { TogglePresenceRequest } from "../../usecases/TogglePresenceUseCase";
 import { emptyResponse, parseDate, ParsedRequest } from "../router";
 
 function handle(request: ParsedRequest, response: ServerResponse): void {
@@ -8,8 +9,14 @@ function handle(request: ParsedRequest, response: ServerResponse): void {
           return
         case 'POST':
           const date = parseDate(request.url.split('/')[2])
+          const togglePresenceRequest : TogglePresenceRequest = {
+            date: date,
+            dayHalf: request.requestBody.dayHalf,
+            username: request.requestBody.username,
+          }
+
           console.log('Toggling presence!', date)
-          //TogglePresenceUseCase(date)
+          TogglePresenceUseCase(togglePresenceRequest)
           emptyResponse(201, response, request.origin)
           return
       }
@@ -28,4 +35,3 @@ export default {
   shouldHandle: shouldHandle,
   handle: handle
 }
-
