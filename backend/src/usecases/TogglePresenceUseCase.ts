@@ -12,4 +12,6 @@ export type TogglePresenceRequest = {
 export default (request: TogglePresenceRequest): void => {
     const repository = new ShiftsRepository()
     console.log("TogglePresenceRequest", request)
+    const weekShifts = repository.getFor(request.date)
+    console.log("Shifts in the week", weekShifts)
 }
