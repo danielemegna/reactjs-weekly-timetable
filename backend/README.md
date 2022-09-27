@@ -1,6 +1,34 @@
-# TBC
+# Frameworkless backend project
 
-## Dev Notes
+### Run it
+
+```
+$ yarn install
+$ yarn tsc
+$ node ./dist/start.js
+```
+
+or in dev autoreload:
+
+```
+$ yarn install
+$ yarn nodemon -e ts --exec "(yarn tsc && node ./dist/start.js) || (sleep 10)"
+```
+
+### Distribution
+
+```
+$ yarn install --prod
+$ node ./dist/start.js
+```
+
+### Run tests
+
+```
+$ yarn test
+```
+
+## Docker way
 
 Temporary dev node docker env with autoreload:
 
