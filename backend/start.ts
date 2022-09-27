@@ -12,7 +12,6 @@ http.createServer((request: IncomingMessage, response: ServerResponse) => {
     request.on('data', chunk => receivedData += chunk);
     request.on('end', () => {
       const requestBody = parseRequestBody(receivedData)
-      console.log(requestBody) // TODO
     });
 
     if (method == 'GET' && url == '/') {
@@ -60,6 +59,7 @@ function parseRequestBody(receivedData: string): string | undefined {
   try {
     const requestBody = JSON.parse(receivedData)
     console.log(`Received request body: ${JSON.stringify(requestBody)}`)
+    return requestBody
   } catch(error) {
     console.log('Invalid request body')
     return undefined
